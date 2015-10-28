@@ -20,8 +20,8 @@ var printResult = function(err, result) {
 };
 
 var getFilter = function() {
-  if (userArgs._.length >= 3) {
-    var criteriaPartials = userArgs._[2].split('='),
+  if (userArgs.filter) {
+    var criteriaPartials = userArgs.filter.split('='),
       field = criteriaPartials[0],
       value = criteriaPartials.slice(1).join('=');
 

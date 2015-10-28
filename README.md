@@ -34,11 +34,14 @@ fields.
 
 Example:
 
-    slack-files TOKEN delete [CRITERIA]
+    slack-files TOKEN delete [--filter FILTER]
 
-Delete files matching the `CRITERIA`.
+Delete files matching the `FILTER`.
 
-Where `CRITERIA` is the string with the format: `FIELD=VALUE`.
+Where `FILTER` is the string with the format: `FIELD=VALUE`.
+
+> BE CAREFUL, running this command without the filter argument will delete all
+> your files!
 
 > For now it's only possible to delete files based on ONE criteria.
 > It's only because I couldn't figure out a nice way of passing multiple from the cli.
