@@ -19,9 +19,31 @@ var printResult = function(err, result) {
   console.log(JSON.stringify(result, null, '  '));
 };
 
+var count = function() {
+  slackFiles.count(userArgs[2] || 'filetype', printResult);
+};
+
+var del = function() {
+  var filter = null;
+  if (userArgs.length >= 3) {
+    var criteriaPartials = userArgs[2].split('='),
+      field = criteriaPartials[0],
+      value = criteriaPartials.slice(1).join('=');
+
+    filter = function(file) {
+      return file[field] == value; // 1 should be equal to '1'
+    };
+  }
+
+  slackFiles.delete(filter, printResult);
+};
+
 switch (command) {
   case 'count':
-    slackFiles.count(userArgs[2] || 'filetype', printResult);
+    count();
+    break;
+  case 'delete':
+    del();
     break;
   default:
     console.log('Command not found: ' + command);
