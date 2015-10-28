@@ -19,11 +19,16 @@ Install slack-files:
 Every command returns a JSON string, you may (or may not) need a JSON processor
 to handle the results, I recomment [jq](https://stedolan.github.io/jq/).
 
+### Common
+
+The `--filter FILTER` argument is a string with the format `FIELD=VALUE` and is
+used to filter files before any action (count, delete, ...).
+
 ### Count
 
 Example:
 
-    slack-files TOKEN count [FIELD]
+    slack-files TOKEN count [FIELD] [--filter FILTER]
 
 Counts files grouped by `FIELD` (defaults to filetype).
 
@@ -36,9 +41,7 @@ Example:
 
     slack-files TOKEN delete [--filter FILTER]
 
-Delete files matching the `FILTER`.
-
-Where `FILTER` is the string with the format: `FIELD=VALUE`.
+Delete files matching the `FILTER` parameter.
 
 > BE CAREFUL, running this command without the filter argument will delete all
 > your files!

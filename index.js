@@ -32,7 +32,7 @@ var getFilter = function() {
 };
 
 var count = function() {
-  slackFiles.count(userArgs._[2] || 'filetype', printResult);
+  slackFiles.count(userArgs._[2] || 'filetype', getFilter(), printResult);
 };
 
 var del = function() {

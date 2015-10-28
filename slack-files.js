@@ -73,10 +73,10 @@ SlackFiles.prototype.iterate = function(filter, iterator, callback) {
   iteratePage(1);
 };
 
-SlackFiles.prototype.count = function(field, callback) {
+SlackFiles.prototype.count = function(field, filter, callback) {
   var counts = {};
 
-  this.iterate(null, function(file, callback) {
+  this.iterate(filter, function(file, callback) {
     var fieldValue = file[field];
     counts[fieldValue] = (counts[fieldValue] || 0) + 1;
     callback();
