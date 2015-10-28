@@ -1,13 +1,13 @@
 #! /usr/bin/env node
 
-var userArgs = process.argv.slice(2);
+var userArgs = require('minimist')(process.argv.slice(2));
 
-if (userArgs.length < 2) {
+if (userArgs._.length < 2) {
   return console.log('Usage:\nslack-files API_TOKEN COMMAND');
 }
 
-var token = userArgs[0],
-  command = userArgs[1],
+var token = userArgs._[0],
+  command = userArgs._[1],
   SlackFiles = require('./slack-files'),
   slackFiles = new SlackFiles(token);
 
@@ -19,23 +19,24 @@ var printResult = function(err, result) {
   console.log(JSON.stringify(result, null, '  '));
 };
 
-var count = function() {
-  slackFiles.count(userArgs[2] || 'filetype', printResult);
-};
-
-var del = function() {
-  var filter = null;
-  if (userArgs.length >= 3) {
-    var criteriaPartials = userArgs[2].split('='),
+var getFilter = function() {
+  if (userArgs._.length >= 3) {
+    var criteriaPartials = userArgs._[2].split('='),
       field = criteriaPartials[0],
       value = criteriaPartials.slice(1).join('=');
 
-    filter = function(file) {
+    return function(file) {
       return file[field] == value; // 1 should be equal to '1'
     };
   }
+};
 
-  slackFiles.delete(filter, printResult);
+var count = function() {
+  slackFiles.count(userArgs._[2] || 'filetype', printResult);
+};
+
+var del = function() {
+  slackFiles.delete(getFilter(), printResult);
 };
 
 switch (command) {
