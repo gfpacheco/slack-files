@@ -25,6 +25,20 @@ var filterFiles = function(files, filter) {
   return files.filter(filter);
 };
 
+var getError = function(err, body) {
+  if (err) {
+    return err;
+  }
+
+  var result = JSON.parse(body);
+
+  if (!result.ok) {
+    return new Error('Slack API returned error:\n' + body);
+  } else {
+    return null;
+  }
+};
+
 SlackFiles.prototype.iterate = function(filter, iterator, callback) {
   var self = this,
     iterated = [];
@@ -32,6 +46,7 @@ SlackFiles.prototype.iterate = function(filter, iterator, callback) {
   var iteratePage = function(page) {
     var path = SLACK_API_ROOT + '/files.list?count=1000&page=' + page + '&token=' + self.token;
     request(path, function(err, res, body) {
+      err = getError(err, body);
       if (err) {
         return callback(err);
       }
@@ -75,8 +90,8 @@ SlackFiles.prototype.delete = function (filter, callback) {
 
   this.iterate(filter, function(file, callback) {
     var path = SLACK_API_ROOT + '/files.delete?file=' + file.id + '&token=' + self.token;
-    request(path, function(err) {
-      callback(err, file.id);
+    request(path, function(err, res, body) {
+      callback(getError(err, body), file.id);
     });
   }, callback);
 };
