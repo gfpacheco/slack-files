@@ -1,0 +1,27 @@
+{
+  "name": "slack-files",
+  "version": "1.0.0",
+  "description": "Node script for Slack's file operations",
+  "main": "slack-files.js",
+  "bin": {
+    "slack-files": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gfpacheco/slack-files.git"
+  },
+  "keywords": [
+    "slack",
+    "files"
+  ],
+  "author": "Guilherme Pacheco <guilherme.f.pacheco@gmail.com> (http://gfpacheco.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gfpacheco/slack-files/issues"
+  },
+  "homepage": "https://github.com/gfpacheco/slack-files",
+  "dependencies": {
+    "async": "1.5.0",
+    "request": "2.65.0"
+  }
+}
